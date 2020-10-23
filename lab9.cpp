@@ -20,11 +20,11 @@ void main()
     
     __asm
     {
-        START:  CMP i, 10
-                JE END
+        START:  CMP i, 10 // Сравниваем i и 10
+                JE END // Если они равны, то прыгаем в END
 
-                MOV EBX, key
-                MOV EAX, mass[EBX]
+                MOV EBX, key // Записываем key (Ключ массива) в индексируемый регистр EBX (все 32-х битные регистры подходят).
+                MOV EAX, mass[EBX] // Записываем значение массива по ключу (key). mass[0] - 32; mass[4] - 10; mass[8] - 75; mass[12] - 41 и так далее
 
                 // A*A=A^2 - Возводим в квадрат
                 MOV temp, EAX
@@ -32,20 +32,20 @@ void main()
                 MOV ECX, EAX
                 IMUL ECX
 
-                MOV result1[EBX], EAX
+                MOV result1[EBX], EAX // Записываем значение EAX в массив result1 по ключу (key)
 
                 // A*A*A=A^3 - Возводим в куб
                 MOV EDX, 0
                 MOV ECX, temp
                 IMUL ECX
 
-                MOV result2[EBX], EAX
+                MOV result2[EBX], EAX // Записываем значение EAX в массив result2 по ключу (key)
 
-                INC i
-                ADD key, 4
-                JMP START
+                INC i // Увеличиваем i на 1
+                ADD key, 4 // Увеличиваем значение key на 4 каждую итерацию цикла. Почему 4-ре? int (Целое число) - 4 байта
+                JMP START // Прыгаем в начало
 
-        END:    NOP
+        END:    NOP // Можно оставить пустым (Без NOP), а можно и вставить эту команду. Она означает, что здесь нет операций.
     }
 
     setlocale(LC_ALL, "rus");
