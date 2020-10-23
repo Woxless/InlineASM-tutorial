@@ -65,4 +65,5 @@ void main()
     }
 
     cout << "y: " << y << endl;
+    system("pause");
 }
