@@ -24,74 +24,80 @@ void main()
     int i = 0;
     __asm
     {
-        CMP number, 0
-        JL NEGATIVE
+        CMP number, 0 // Сравниваем number и 0
+        JL NEGATIVE // Если (number < 0), то прыгаем в NEGATIVE
 
-        START:  CMP number, 9
-                JBE FIRST
+        START:  CMP number, 9 // Cравниваем number и 9
+                JBE FIRST // Если (number <= 0), то прыгаем в FIRST
                 
+                // Получение последней цифры
                 MOV EDX, 0
                 MOV EAX, number
                 MOV ECX, 10
                 DIV ECX
                 MOV number, EAX
 
+                // Суммирование цифр (Начиная с конца)
                 ADD sum, EDX
                 MOV temp, EDX
-
+                
+                // Проверка на чётность
                 MOV EDX, 0
                 MOV EAX, temp
                 MOV ECX, 2
                 DIV ECX
 
-                CMP EDX, 0
-                JE EVENS
+                CMP EDX, 0 // Сравниваем EDX (Остаток от деления на 2) и 0
+                JE EVENS // Если (EDX = 0), то прыгаем в EVENS
                 
-                INC i
-                CMP number, 0
-                JNE START
+                INC i  // Увеличиваем i на 1
+                CMP number, 0 // Сравниваем number и 0
+                JNE START // Если (number не равен 0), то прыгаем обратно в START
 
-        FIRST:  MOV EAX, number
-                MOV first, EAX
+        FIRST:  MOV EAX, number 
+                MOV first, EAX // Записываем первое число в first
 
                 MOV EAX, number
                 MOV temp, EAX
-
+                
+                // Получаем его значение
                 MOV EDX, 0
                 MOV EAX, number
                 MOV ECX, 10
                 DIV ECX
                 MOV number, EAX
-
+                
+                // Суммируем
                 ADD sum, EDX
-
+                
+                // Проверяем на чётность
                 MOV EDX, 0
                 MOV EAX, temp
                 MOV ECX, 2
                 DIV ECX
 
-                CMP EDX, 0
-                JE EVENS
+                CMP EDX, 0 // Остаток и 0
+                JE EVENS // Если остаток равен 0, то прыгаем в Evens
 
                 INC i
-                JMP END
+                JMP END // Дошло выполнение сюда? Прыгаем в END
 
-        NEGATIVE:   NEG number
+        NEGATIVE:   NEG number // NEG 1 = -1; NEG -1 = 1;
                     JMP START
 
-        EVENS:  CMP temp, 0
-                JE ZERO
+        EVENS:  CMP temp, 0 // temp, 0
+                JE ZERO // Если равны, то прыгаем в ZERO
                 INC eveni
 
                 INC i
-                CMP number, 0
-                JNE START
-                JMP END
+                CMP number, 0 // number, 0
+                JNE START // Если не равны, то обратно в START
+                JMP END // Дошло сюда? Прыгаем в конец
         
         ZERO:   INC i
-                CMP number, 0
-                JNE START
-                JMP END
+                CMP number, 0 // number, 0
+                JNE START // Если не равны, то обратно в START
+                JMP END // Дошло сюда? Прыгаем в конец
         
         END:
 
