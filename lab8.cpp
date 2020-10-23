@@ -10,25 +10,27 @@ void main()
     int check = 0;
     __asm
     {
-        START:  CMP i, 30
-                JE END
-
+        START:  CMP i, 30 // Сравниваем - i, 30
+                JE END // Если равны, то прыгаем в END
+                
+                // Деление на i на 6. 
                 MOV EDX, 0
                 MOV EAX, i
                 MOV ECX, 6
                 DIV ECX
+            
+                // (EAX - результат, EDX - остаток)
+                CMP EDX, 2 // Сравниваем - остаток
+                JE CHECK // Если равны, то прыгаем в CHECK
 
-                CMP EDX, 2
-                JE CHECK
+                DEC i // Уменьшаем i на 1
+                JMP START // Прыгаем в START
 
-                DEC i
-                JMP START
+        CHECK:  INC check // Увеличиваем check на 1
+                DEC i // Уменьшаем i на 1
+                JMP START // Прыгаем в START
 
-        CHECK:  INC check
-                DEC i
-                JMP START
-
-        END: NOP
+        END: NOP // Можно оставить пустым (Без NOP), а можно и вставить эту команду. Она означает, что здесь нет операций.
 
     }
 
