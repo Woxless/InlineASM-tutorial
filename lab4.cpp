@@ -76,4 +76,5 @@ void main()
     }
 
     cout << "result: " << result << endl;
+    system("pause");
 }
